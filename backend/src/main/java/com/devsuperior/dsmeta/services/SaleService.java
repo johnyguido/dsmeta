@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.devsuperior.dsmeta.entities.Sale;
 import com.devsuperior.dsmeta.repositories.SaleRepository;
@@ -17,6 +18,9 @@ public class SaleService {
 
 	@Autowired
 	private SaleRepository repository;
+	
+	@Autowired
+	private SmsService smsService;
 
 	public Page<Sale> findSales(String minDate, String maxDate, Pageable pageable) {
 
@@ -26,6 +30,10 @@ public class SaleService {
 		LocalDate max = maxDate.equals("") ? today : LocalDate.parse(maxDate);
 
 		return repository.findSales(min, max, pageable);
+	}
+
+	public void notifySms(@PathVariable Long id) {
+		smsService.sendSms(id);
 	}
 
 }
