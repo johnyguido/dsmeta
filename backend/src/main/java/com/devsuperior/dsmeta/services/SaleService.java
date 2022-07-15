@@ -32,7 +32,7 @@ public class SaleService {
 		return repository.findSales(min, max, pageable);
 	}
 
-	public void notifySms(@PathVariable Long id) {
+	public void notifySms(Long id) {		
 		smsService.sendSms(id);
 	}
 
